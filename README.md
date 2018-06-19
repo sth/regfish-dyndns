@@ -65,6 +65,12 @@ interface for your domain.
 **Warning:** This token can be used to modify your DNS, so take care that
 untrusted users don't get access to it.
 
+### Command line parameter `--ip` or `-i`; Config file variable `IP` (optional)
+
+Set domain name to this IPv4 address. If not specified, use the IP address
+the current host uses to connect to the regfish server (`thisipv4=1` in the
+Regfish API).
+
 ### Command line parameter `--quiet` or `-q`
 
 Don't print output unless an error occurs.

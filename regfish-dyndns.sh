@@ -5,6 +5,7 @@ set -o pipefail
 CONFIG=
 FQDN=
 TOKEN=
+IP=
 QUIET=
 
 if [ -r /etc/regfish-dyndns.conf ]; then
@@ -16,6 +17,7 @@ function usage() {
 	echo "  --config FILE   Config file name"
 	echo "  --fqdn DOMAIN   Domain name"
 	echo "  --token TOKEN   Regfish dyndns token"
+	echo "  --ip IP         IP address (optional)"
 	echo "  --quiet         Don't show output on success"
 }
 
@@ -45,6 +47,14 @@ while (( $# )); do
 			TOKEN_ARG="${1#--token=}"
 			shift
 			;;
+		--ip|-i)
+			IP_ARG="$2"
+			shift 2
+			;;
+		--ip=*)
+			IP_ARG="${1#--ip=}"
+			shift
+			;;
 		--quiet|-q)
 			QUIET=1
 			shift
@@ -67,9 +77,18 @@ fi
 if [ -d TOKEN_ARG ]; then
 	TOKEN="$TOKEN_ARG"
 fi
+if [ -d IP_ARG ]; then
+	IP="$IP_ARG"
+fi
+
+if [ -n "$IP" ]; then
+	IP_URLPARAM="ipv4=$IP"
+else
+	IP_URLPARAM="thisipv4=1"
+fi
 
 
-RESP=$(curl -sS --data '@-' "https://dyndns.regfish.de/" <<<"fqdn=$FQDN&token=$TOKEN&thisipv4=1")
+RESP=$(curl -sS --data '@-' "https://dyndns.regfish.de/" <<<"fqdn=$FQDN&token=$TOKEN&$IP_URLPARAM")
 if echo "$RESP" | grep -q '|10.|'; then
 	if [ -z "$QUIET" ]; then
 		echo "$RESP"
