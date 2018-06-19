@@ -1,4 +1,4 @@
-= regfish-dyndns
+# regfish-dyndns
 
 A shell script and (optionally) systemd service to use Regfish DynDNS
 to register the current IP as a domain name.
@@ -7,7 +7,7 @@ The systemd service can be used to register the current IP when the
 system boots. This is useful for example for cloud servers that get
 assigned a new IP address on each start.
 
-== Security
+## Security
 
 The script uses a Regfish DynDNS token to modify your DNS. **Anybody
 with access to this token can modify your DNS records.**
@@ -19,7 +19,7 @@ token, all users can see it, for example with the `ps` command.
 The safer option is to let the script read the token form a config
 file, but *make sure this config file is only readable by trusted users.*
 
-== Installation
+## Installation
 
 Install the `regfish-dyndns.sh` script:
 
@@ -32,39 +32,39 @@ IP for the specified domain name.
 
 You can also set these values in a config file:
 
-	 sudo cp regfish-dyndns.conf /etc/
+    sudo cp regfish-dyndns.conf /etc/
     sudo vi /etc/regfish-dyndns.conf  # set TOKEN=... and FQDN=...
     # probably you should also restrict its read permissions:
-	 sudo chmod o-r /etc/regfish-dyndns.conf
+    sudo chmod o-r /etc/regfish-dyndns.conf
 
 This config file is sourced by `regish-dyndns.sh`.
 
 With such a config file you can use the provided systemd service file
 to automatically register the current IP when the system boots:
 
-	 sudo cp regfish-dyndns.service /etc/systemd/system/
-	 sudo systemctl enable regfish-dyndns   # execute at system boot
-	 sudo systemctl start regfish-dyndns    # execute now
+    sudo cp regfish-dyndns.service /etc/systemd/system/
+    sudo systemctl enable regfish-dyndns   # execute at system boot
+    sudo systemctl start regfish-dyndns    # execute now
 
-== Configuation
+## Configuation
 
-=== Command line parmeters `--config` or `-C`
+### Command line parmeters `--config` or `-C`
 
-Use the specified config file. The default (if available)
-is `/etc/regfish-dyndns.conf`.
+Use the specified config file. The default is `/etc/regfish-dyndns.conf`
+(if that exists).
 
-=== Command line parameter `--fqdn` or `-d`; Config file variable `FQDN`
+### Command line parameter `--fqdn` or `-d`; Config file variable `FQDN`
 
 The fully qualified domain name you want to change to a new IP.
 
-=== Command line parameter `--token` or `-t`; Config file variable `TOKEN`
+### Command line parameter `--token` or `-t`; Config file variable `TOKEN`
 
 The Regfish DynDNS token. You get this when enabling DynDNS in Regfish's web
 interface for your domain.
 
-**Warning:** This token can be used to modify your DNS, so take care
+**Warning:** This token can be used to modify your DNS, so take care that
 untrusted users don't get access to it.
 
-=== Command line parameter `--quiet` or `-q`
+### Command line parameter `--quiet` or `-q`
 
 Don't print output unless an error occurs.
