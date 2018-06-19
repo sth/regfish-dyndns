@@ -1,0 +1,12 @@
+[Unit]
+Description=Register IP address with Regfish DynDNS
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/regfish-dyndns.sh
+Restart=no
+RemainAfterExit=yes
+
+[Install]
+WantedBy=network-online.target
