@@ -69,7 +69,7 @@ if [ -d TOKEN_ARG ]; then
 fi
 
 
-RESP=$(curl -sS "https://dyndns.regfish.de/?fqdn=$FQDN&token=$TOKEN&thisipv4=1")
+RESP=$(curl -sS --data '@-' "https://dyndns.regfish.de/" <<<"fqdn=$FQDN&token=$TOKEN&thisipv4=1")
 if echo "$RESP" | grep -q '|10.|'; then
 	if [ -z "$QUIET" ]; then
 		echo "$RESP"

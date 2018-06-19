@@ -9,14 +9,15 @@ assigned a new IP address on each start.
 
 == Security
 
-**Don't use the script on a system with untrusted users.**
+The script uses a Regfish DynDNS token to modify your DNS. **Anybody
+with access to this token can modify your DNS records.**
 
-The Regfish token used to register DNS names is visible to other users
-on the system with `ps` or similar tools. Anybody with access to this
-token can modify your DNS records.
+If you use the `--token` command line parameter to pass the Regfish
+token, all users can see it, for example with the `ps` command.
+*Don't do this on a system with untrusted users.*
 
-If you save the token in a config file, restrict its read permissions
-as far as possible.
+The safer option is to let the script read the token form a config
+file, but *make sure this config file is only readable by trusted users.*
 
 == Installation
 
@@ -29,7 +30,7 @@ you want to set the IP) and `--token` (the Regfish DynDNS token as
 obtained from the Regfish web interface) to register the current hosts
 IP for the specified domain name.
 
-You can also configure these values in a config file:
+You can also set these values in a config file:
 
 	 sudo cp regfish-dyndns.conf /etc/
     sudo vi /etc/regfish-dyndns.conf  # set TOKEN=... and FQDN=...
