@@ -17,7 +17,7 @@ token, all users can see it, for example with the `ps` command.
 *Don't do this on a system with untrusted users.*
 
 The safer option is to let the script read the token form a config
-file, but *make sure this config file is only readable by trusted users.*
+file with the `--config` option, but *make sure this config file is only readable by trusted users.*
 
 ## Installation
 
