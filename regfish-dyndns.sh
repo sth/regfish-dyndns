@@ -88,6 +88,9 @@ else
 fi
 
 
+# We pass the GET parameters through stdin instead of adding them to the
+# URL directly. This makes sure the $TOKEN doesn't show up in the command
+# line where everybody could see it.
 RESP=$(curl -sS --data '@-' "https://dyndns.regfish.de/" <<<"fqdn=$FQDN&token=$TOKEN&$IP_URLPARAM")
 if echo "$RESP" | grep -q '|10.|'; then
 	if [ -z "$QUIET" ]; then
